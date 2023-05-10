@@ -48,6 +48,14 @@ class Currency_model extends CI_Model {
 			->row();
 	} 
 
+	public function findByField($field, $val = null)
+	{ 
+		return $this->db->select("*")->from($this->table)
+			->where($field, $val) 
+			->get()
+			->row();
+	} 
+
  
 public function countlist()
 	{

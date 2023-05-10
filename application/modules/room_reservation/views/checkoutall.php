@@ -933,6 +933,18 @@
                             <?php if($currency->position==1){ echo html_escape($currency->curr_icon); } ?><?php echo $allroomrentandtax-$allinvat; ?><?php if($currency->position==2){ echo html_escape($currency->curr_icon); } ?>
                         </td>
                     </tr>
+
+                    <?php if(isset($fccurrency) && isset($fccurrency->position)) { ?>
+                    <tr>
+                        <td class="invp-25">
+                            <?php echo display("sub_total") ?> in FC
+                        </td>
+                        <td class="invp-26" width="80">
+                            <?php if($fccurrency->position==1){echo html_escape($fccurrency->curr_icon);}?><?php echo ($allroomrentandtax-$allinvat) * $fccurrency->curr_rate;?><?php if($fccurrency->position==2){echo html_escape($fccurrency->curr_icon);}?>
+                        </td>
+                    </tr>
+                    <?php } ?>
+
                     <tr>
                         <td class="invp-27">
                             <small><?php echo display("tax") ?></small>

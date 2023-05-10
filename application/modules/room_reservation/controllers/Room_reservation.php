@@ -7,7 +7,8 @@ class Room_reservation extends MX_Controller {
     {
         parent::__construct();
 		$this->load->model(array(
-			'roomreservation_model'
+			'roomreservation_model',
+			'dashboard/currency_model'
 		));	
     }
     public function bookingdatatable(){
@@ -615,7 +616,7 @@ class Room_reservation extends MX_Controller {
 		$data["customerlist"] = $this->roomreservation_model->customerlist();
 		$data["inouttime"] = $this->db->select("checkintime,checkouttime")->from("setting")->where("id",2)->get()->row();
 		$data['currency']    = getCurrency(); 
-
+		$data['fccurrency'] = $this->currency_model->findByField('currencyname', 'FC');
         #
         #pagination ends
         #   
@@ -2792,6 +2793,9 @@ class Room_reservation extends MX_Controller {
 		$data['btaxinfo']=$this->roomreservation_model->btaxinfo($id);
 		$data['commominfo']=$this->roomreservation_model->commoninfo();
 		$data['currency']=$this->roomreservation_model->currencysetting($data['storeinfo']->currency);  
+
+		$data['fccurrency'] = $this->currency_model->findByField('currencyname', 'FC');
+
 		if(empty($pdf)){
 			$this->load->view('room_reservation/bookindetailsprint', $data); 
 		}else{

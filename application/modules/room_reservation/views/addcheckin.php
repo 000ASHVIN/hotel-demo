@@ -14,7 +14,7 @@
                         <label class="font-weight-600 mb-1"><?php echo display("checkin") ?> <span
                                 class="text-danger">*</span></label>
                         <div class="icon-addon addon-md">
-                            <input type="text" name="datefilter" class="form-control datefilter" id="datefilter1"
+                            <input type="text" name="datefilter" class="form-control" id="datefilter1"
                                 placeholder="mm/dd/yyyy --:-- --" value="" />
                             <label class="fas fa-calendar-alt"></label>
                         </div>
@@ -25,7 +25,7 @@
                         <label class="font-weight-600 mb-1"><?php echo display("checkout") ?><span
                                 class="text-danger">*</span></label>
                         <div class="icon-addon addon-md">
-                            <input type="text" name="datefilter" class="form-control datefilter" id="datefilter2"
+                            <input type="text" name="datefilter" class="form-control" id="datefilter2"
                                 placeholder="mm/dd/yyyy --:-- --" value="" />
                             <label class="fas fa-calendar-alt"></label>
                         </div>
@@ -991,3 +991,31 @@
 <script src="<?php echo MOD_URL.$module;?>/assets/js/addcheckin.js"></script>
 <script src="<?php echo MOD_URL.$module;?>/assets/js/custom.js"></script>
 <script src="<?php echo MOD_URL.$module;?>/assets/js/booking.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<script>
+$(function() {
+        $("#datefilter1").daterangepicker({
+            "singleDatePicker": true,
+            "timePicker": true,
+            timePicker24Hour: false,
+            timePickerIncrement: 30,
+            locale: {
+                cancelLabel: 'Clear',
+                format: 'YYYY-MM-DD HH:mm:ss A'
+            },
+            startDate : moment().startOf('day').add(14, 'hours')
+        });  
+        $("#datefilter2").daterangepicker({
+            "singleDatePicker": true,
+            "timePicker": true,
+            timePicker24Hour: false,
+            timePickerIncrement: 30,
+            locale: {
+                cancelLabel: 'Clear',
+                format: 'YYYY-MM-DD HH:mm:ss A'
+            },
+            startDate : moment().startOf('day').add(10, 'hours')
+        });      
+});
+</script>
