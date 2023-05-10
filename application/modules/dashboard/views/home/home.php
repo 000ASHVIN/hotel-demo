@@ -13,10 +13,11 @@
              </div>
              <div class="card-footer p-3">
                  <div class="stats">
-                 </div>
+                 </div> 
              </div>
          </div>
      </div>
+     <?php if($this->session->userdata('isAdmin') == 1) { ?>
      <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
          <div class="card card-stats statistic-box mb-4">
              <div
@@ -34,6 +35,7 @@
              </div>
          </div>
      </div>
+     <?php } ?>
      <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
          <div class="card card-stats statistic-box mb-4">
              <div
@@ -79,6 +81,8 @@
      </div>
  </div>
  <div class="row">
+    
+    <?php if($this->session->userdata('isAdmin') == 1) { ?>
      <div class="col-sm-6 col-md-6 col-cxl-4 ">
          <!--Simple Donut Chart-->
          <div class="card height_400 mb-4">
@@ -94,6 +98,7 @@
              </div>
          </div>
      </div>
+     <?php } ?>
 
      <div class="col-sm-6 col-md-6 col-cxl-4">
          <!--Basic Line Chart-->
