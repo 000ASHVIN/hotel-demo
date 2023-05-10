@@ -136,6 +136,26 @@ class Language extends MX_Controller {
         echo modules::run('template/layout', $data);
 
     }
+    
+    public function phraseCsvSample($language = null) {
+        $phrases = $this->phrases();
+        $data[] = array('f_name'=> "Nishit", 'l_name'=> "patel", 'mobile'=> "999999999", 'gender'=> "male");
+        header("Content-type: application/csv");
+        header("Content-Disposition: attachment; filename=\"test".".csv\"");
+        header("Pragma: no-cache");
+        header("Expires: 0");
+
+        $handle = fopen('php://output', 'w');
+        fputcsv($handle, array("No","Phrase Name","Label"));
+        $cnt=1;
+        foreach ($phrases as $phrase) {
+            $narray=array($cnt, $phrase->phrase, "");
+            fputcsv($handle, $narray);
+            $cnt++;
+        }
+        fclose($handle);
+    }
+
     public function datatable(){
 		$params = $columns = $totalRecords = $data = array();
 		$params = $_REQUEST;

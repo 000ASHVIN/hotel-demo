@@ -20,11 +20,11 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            ...
+                            Download <a href="<?php echo base_url('/edit-phrase/csv/sample') . '/' .$language; ?>">Sample</a>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Save changes</button>
+                            <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
                         </div>
                         </div>
                     </div>
