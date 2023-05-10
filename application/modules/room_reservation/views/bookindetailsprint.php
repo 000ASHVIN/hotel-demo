@@ -147,7 +147,7 @@
                             <div><strong><?php echo $x;?></strong></div>
                         </td>
                         <td><?php echo html_escape($alldays);?></td>
-                        <td><?php echo html_escape($roomrate);?></td>
+                        <td>$<?php echo html_escape($roomrate);?></td>
                     </tr>
                     <?php } ?>
                 <?php } ?>
@@ -160,7 +160,7 @@
         <div class="col-sm-4">
             <ul class="list-unstyled text-right">
                 <li>
-                    <strong><?php echo display('subtotal'); ?>:</strong> <?php $grprice=$totalroom*$total;
+                    <strong><?php echo display('subtotal'); ?>:</strong> $ <?php $grprice=$totalroom*$total;
                     $grprice=$grprice;
                     echo (($grprice!=0)?$grprice:$grprice=$total); $grprice -= $disamount->discountamount*$datediff;?>
                 </li>
@@ -183,7 +183,7 @@
                     <?php } ?>
                 <?php } ?>
                 <li>
-                    <strong><?php echo display('tax') ?> :</strong> <?php echo html_escape($totaltax);?>
+                    <strong><?php echo display('tax') ?> :</strong> $ <?php echo html_escape($totaltax);?>
                 </li>
                 <?php if($bookinfo->bookingstatus==5){ ?>
                     <?php if(isset($btaxinfo->complementary)){ ?>
@@ -238,9 +238,10 @@
                 }
                 ?>
                 <li>
-                    <strong><?php echo display('grand_total') ?>:</strong> <?php if($currency->position==1){echo html_escape($currency->curr_icon);}?><?php echo number_format($totaltax+$postedbill+$grprice,2);?><?php if($currency->position==2){echo html_escape($currency->curr_icon);}?>
-                    <br /><strong><?php echo display('paid_amount') ?>:</strong> <?php if($currency->position==1){echo html_escape($currency->curr_icon);}?><?php if (!empty($bookinfo->paid_amount)){echo $bookinfo->paid_amount+$postedbill-$reducetax;} else echo "0";?><?php if($currency->position==2){echo html_escape($currency->curr_icon);}?>
-                    <br /><strong><?php echo display('due_amount') ?>:</strong> <?php if($currency->position==1){echo html_escape($currency->curr_icon);}?><?php if (!empty($bookinfo->paid_amount)){echo ($grprice+$totaltax+$postedbill+$reducetax)-($bookinfo->paid_amount+$postedbill);} else echo html_escape($grprice+$totaltax+$postedbill);?><?php if($currency->position==2){echo html_escape($currency->curr_icon);}?>
+                    <strong><?php echo display('grand_total') ?>:</strong>  $ <?php if($currency->position==1){echo html_escape($currency->curr_icon);}?><?php echo number_format($totaltax+$postedbill+$grprice,2);?><?php if($currency->position==2){echo html_escape($currency->curr_icon);}?>
+                    <br /><strong><?php echo 'FC Grand Total'; ?>:</strong> <?php if($currency->position==1){echo html_escape($currency->curr_icon);}?><?php echo number_format($totaltax+$postedbill+$grprice*2000,2);?><?php if($currency->position==2){echo html_escape($currency->curr_icon);}?>
+                    <br /><strong><?php echo display('paid_amount') ?>:</strong>   $ <?php if($currency->position==1){echo html_escape($currency->curr_icon);}?><?php if (!empty($bookinfo->paid_amount)){echo $bookinfo->paid_amount+$postedbill-$reducetax;} else echo "0";?><?php if($currency->position==2){echo html_escape($currency->curr_icon);}?>
+                    <br /><strong><?php echo display('due_amount') ?>:</strong> $ <?php if($currency->position==1){echo html_escape($currency->curr_icon);}?><?php if (!empty($bookinfo->paid_amount)){echo ($grprice+$totaltax+$postedbill+$reducetax)-($bookinfo->paid_amount+$postedbill);} else echo html_escape($grprice+$totaltax+$postedbill);?><?php if($currency->position==2){echo html_escape($currency->curr_icon);}?>
                 </li>
             </ul>
         </div>

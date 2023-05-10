@@ -1,4 +1,5 @@
 <link rel="stylesheet" href="<?php echo MOD_URL.$module;?>/assets/css/custom.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.css">
 <div id="reservation">
     <div class="card mb-4">
         <div class="card-header py-2 ">
@@ -1165,3 +1166,31 @@
 <script src="<?php echo MOD_URL.$module;?>/assets/js/editreservation.js"></script>
 <script src="<?php echo MOD_URL.$module;?>/assets/js/customedit.js"></script>
 <script src="<?php echo MOD_URL.$module;?>/assets/js/bookingedit.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<script>
+$(function() {
+        $("#datefilter1").daterangepicker({
+            "singleDatePicker": true,
+            "timePicker": true,
+            timePicker24Hour: false,
+            timePickerIncrement: 30,
+            locale: {
+                cancelLabel: 'Clear',
+                format: 'YYYY-MM-DD HH:mm:ss A'
+            },
+            startDate : moment().startOf('day').add(14, 'hours')
+        });  
+        $("#datefilter2").daterangepicker({
+            "singleDatePicker": true,
+            "timePicker": true,
+            timePicker24Hour: false,
+            timePickerIncrement: 30,
+            locale: {
+                cancelLabel: 'Clear',
+                format: 'YYYY-MM-DD HH:mm:ss A'
+            },
+            startDate : moment().startOf('day').add(10, 'hours')
+        });      
+});
+</script>
