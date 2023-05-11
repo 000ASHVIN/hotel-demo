@@ -20,7 +20,29 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            Download <a href="<?php echo base_url('/edit-phrase/csv/sample') . '/' .$language; ?>">Sample</a>
+                            <form action="" method="post" enctype="multipart/form-data" onsubmit="return csvupload()">
+                                <div>
+                                    Download <a href="<?php echo base_url('/edit-phrase/csv/sample') . '/' .$language; ?>">Sample</a>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="file" class="col-sm-2 gallery-inp-hi">File<i
+                                            class="text-danger"> * </i></label>
+                                    <div class="col-sm-9">
+                                        <div>
+                                            <input type="file" name="file" id="file" class="custom-input-file"/>
+                                            <label for="file">
+                                                <i class="fa fa-upload"></i>
+                                                <span><?php echo display('choose_file'); ?>…</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <button type="submit" class="btn btn-primary">Save changes</button>
+                                </div>
+                            </form>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -88,3 +110,17 @@
         </div>
     </div>
 </div>
+
+<script>
+    function csvupload() {
+        console.log('in')
+        return false;
+        // e.preventDefault();
+        var file = $('#file').val().split('.').pop().toLowerCase();
+
+        if($.inArray(file, ['xlsx', 'xls', 'csv']) == -1) {
+            toastrErrorMsg("File is Required or Invalid");
+            return false;
+        }
+    }
+</script>
