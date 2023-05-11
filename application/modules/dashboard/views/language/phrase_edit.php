@@ -20,17 +20,21 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <form action="" method="post" enctype="multipart/form-data" onsubmit="return csvupload()">
+                            <!-- <form action="<?php echo base_url('add-phrase-csv') ?>" method="post" enctype="multipart/form-data" onsubmit="return csvupload()"> -->
+                            <?php echo form_open_multipart('dashboard/language/csvform'); ?>
+                           
                                 <div>
                                     Download <a href="<?php echo base_url('/edit-phrase/csv/sample') . '/' .$language; ?>">Sample</a>
                                 </div>
+
+                                <input type="hidden" id='csrf_token' value="<?php echo $this->security->get_csrf_hash();?>" />
 
                                 <div class="form-group row">
                                     <label for="file" class="col-sm-2 gallery-inp-hi">File<i
                                             class="text-danger"> * </i></label>
                                     <div class="col-sm-9">
                                         <div>
-                                            <input type="file" name="file" id="file" class="custom-input-file"/>
+                                            <input type="file" name="file" id="file" class="custom-input-file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"/>
                                             <label for="file">
                                                 <i class="fa fa-upload"></i>
                                                 <span><?php echo display('choose_file'); ?>…</span>
@@ -40,9 +44,10 @@
                                 </div>
 
                                 <div>
-                                    <button type="submit" class="btn btn-primary">Save changes</button>
+                                    <button type="submit" class="btn btn-primary" onclick=" return csvupload()">Save changes</button>
                                 </div>
-                            </form>
+                            <!-- </form> -->
+                            <?php echo form_close(); ?>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -112,15 +117,55 @@
 </div>
 
 <script>
+    function toastrErrorMsg(r) {
+        setTimeout(function () {
+            toastr.options = {
+                closeButton: true,
+                progressBar: true,
+                showMethod: 'slideDown',
+                timeOut: 1500,
+            };
+            toastr.error(r);
+        }, 1000);
+    }
+
+    function toastrSuccessMsg(r) {
+        setTimeout(function () {
+            toastr.options = {
+                closeButton: true,
+                progressBar: true,
+                showMethod: 'slideDown',
+                timeOut: 1500,
+            };
+            toastr.success(r);
+        }, 1000);
+    }
+
     function csvupload() {
-        console.log('in')
-        return false;
-        // e.preventDefault();
         var file = $('#file').val().split('.').pop().toLowerCase();
 
         if($.inArray(file, ['xlsx', 'xls', 'csv']) == -1) {
             toastrErrorMsg("File is Required or Invalid");
             return false;
         }
+
+        // $.ajax({
+        // url: base_url + "add-phrase-csv",
+        // type: "POST",
+        // enctype: 'multipart/form-data',
+        // processData: false,
+        // contentType: false,
+        // success: function (r) {
+        //     $('#file').val('');
+        //     toastr.success("<h5>Success</h5>Save Successfully");         
+        //     // if(r.substr(4,1)==="F")
+        //     // toastrErrorMsg(r);
+        //     //     window.location.reload();
+        // }
+    // });
+    console.log($('#csrf_token').val());
     }
+
+    
+
 </script>

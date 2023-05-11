@@ -138,6 +138,7 @@ class Language extends MX_Controller {
     }
     
     public function phraseCsvSample($language = null) {
+        
         $phrases = $this->phrases();
         $data[] = array('f_name'=> "Nishit", 'l_name'=> "patel", 'mobile'=> "999999999", 'gender'=> "male");
         header("Content-type: application/csv");
@@ -154,6 +155,13 @@ class Language extends MX_Controller {
             $cnt++;
         }
         fclose($handle);
+    }
+
+    public function csvform()
+    {
+        // $csv = $this->input->post('file',true);
+        dd($this->input->post('file'));
+        //    $csv = $this->input->post('file');
     }
 
     public function datatable(){
