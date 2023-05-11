@@ -3071,6 +3071,37 @@ class Room_reservation extends MX_Controller {
         $data['page']   = "roomlist";   
         echo Modules::run('template/layout', $data); 
     }
+
+	public function room_calender($id = null){
+		
+		$this->permission->method('room_reservation','read')->redirect();
+				
+        $data['title']    = display('calender');
+		$hall_room = $this->db->where('directory', 'hall_room')->where('status', 1)->get('module')->num_rows();
+        if ($hall_room == 1) {
+			$data["roomlist"] = $this->db->select('*')->from('tbl_roomnofloorassign')->where('roomid<>',NULL)->get()->result();
+		}else{
+			$data["roomlist"] = $this->roomreservation_model->get_all('*','tbl_roomnofloorassign','floorid');
+		}
+		$roomdata = $data["roomlist"];
+		
+        $data['module'] = "room_reservation";
+        $data['page']   = "calender";   
+        echo Modules::run('template/layout', $data,$roomdata);
+	}
+
+	public function room_cal(){
+		$hall_room = $this->db->where('directory', 'hall_room')->where('status', 1)->get('module')->num_rows();
+
+		if ($hall_room == 1) {
+			$data["roomlist"] = $this->db->select('*')->from('tbl_roomnofloorassign')->where('roomid<>',NULL)->get()->result();
+		}else{
+			$data["roomlist"] = $this->roomreservation_model->get_all('*','tbl_roomnofloorassign','floorid');
+		}
+			$roomdata = $data["roomlist"];
+	
+       return $roomdata;
+	}
 	public function roomlistDetail(){
 		$bookedid = $this->input->post("bookedid", true);
 		$dateTime = $this->input->post("datetime", true);

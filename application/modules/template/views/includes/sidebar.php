@@ -527,6 +527,14 @@
                             "permission" => "read"
                         
                     ),
+                    "room_calender" => array(
+                        //menu name
+                            "controller" => "room_reservation",
+                            "method"     => "room_status_calender",
+                            "url"        => "room_reservation/room-status-calender",
+                            "permission" => "read"
+                        
+                    ),
                 );
 
                 // module name
