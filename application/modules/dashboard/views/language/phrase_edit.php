@@ -21,8 +21,9 @@
                         </div>
                         <div class="modal-body">
                             <!-- <form action="<?php echo base_url('add-phrase-csv') ?>" method="post" enctype="multipart/form-data" onsubmit="return csvupload()"> -->
-                            <?php echo form_open_multipart('dashboard/language/csvform'); ?>
-                           
+                            
+                            <?php echo form_open_multipart('dashboard/language/csvform/'. $language); ?>
+
                                 <div>
                                     Download <a href="<?php echo base_url('/edit-phrase/csv/sample') . '/' .$language; ?>">Sample</a>
                                 </div>

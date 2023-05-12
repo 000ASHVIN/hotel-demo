@@ -363,7 +363,7 @@ $route['add-phrase'] = 'dashboard/Language/add_phrase';
 $route['phrase-list'] = "dashboard/language/phrase";
 $route['edit-phrase/(:any)'] = "dashboard/language/editPhrase/$1";
 $route['edit-phrase/csv/sample/(:any)'] = "dashboard/language/phraseCsvSample/$1";
-$route['add-phrase-csv'] = "dashboard/language/csvform";
+$route['add-phrase-csv/(:any)'] = "dashboard/language/csvform/$1";
 
 //Applications routes
 $route['application-setting'] = "dashboard/setting";

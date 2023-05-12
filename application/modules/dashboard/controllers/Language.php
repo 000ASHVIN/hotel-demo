@@ -157,19 +157,79 @@ class Language extends MX_Controller {
         fclose($handle);
     }
 
-    public function csvform()
+    public function csvform($language = null)
     {
+        // print_r($language);
+        $tempFile = tempnam(sys_get_temp_dir(), 'csv');
         $csv = $_FILES['csv_file']['tmp_name'];
-        $handle = fopen($csv,"r");
-        while (($row = fgetcsv($handle, 10000, ",")) != FALSE) //get row vales
-        {
-            print_r($row); //rows in array
-            echo "<br>";
-        //here you can manipulate the values by accessing the array
 
+        $handle = fopen($csv, 'r');
+        fgetcsv($handle);
 
+        $tempHandle = fopen($tempFile, 'w');
+
+        while (($row = fgetcsv($handle)) !== false) {
+            fputcsv($tempHandle, $row);
         }
-        exit;
+
+        print_r($tempHandle);
+        // $handal = fgetcsv($tempHandle);
+
+        // while (($row = fgetcsv($handal, 10000, ",")) != FALSE){
+        //     print_r($row);
+        // }
+
+        // fclose($handle);
+        // fclose($tempHandle);
+
+// Rename the temporary file to the original file
+        // $handle = fopen($csv,"r");
+
+        // $handle = fgetcsv($handle);
+
+        // // print_r($handle);
+        // // array_shift($handle);
+        
+        // while (($row = fgetcsv($handle, 10000, ",")) != FALSE) //get row vales
+        // {
+        //     print_r($row);
+        //     // $this->db->where($language, $row[2]);
+            
+        //     // $this->db->update('language', $row);
+
+        //     // echo  $this->db->last_query();exit;
+        //                     // ->set($language,$lang[$i])
+        //                     // ->update($this->table);
+        //     // print_r($row[1]); // Phrase Name
+        //     // print_r($row[2]); // label
+
+        //     // $this->db->insert($this->table, $row[1]);
+        //     // $this->db->set($row);
+        //     // $this->db->insert('language');
+        //     // dd($row);
+        //     // print_r($row); //rows in array
+        //     echo "<br>";
+        //     //here you can manipulate the values by accessing the array
+
+
+        // }
+
+        // if ($handle !== false) {
+        //     // read the first row (header) and ignore it
+        //     fgetcsv($handle);
+        //     // read and process each remaining row
+        //     while (($data = fgetcsv($handle)) !== false) {
+            
+        //         // print_r($data);
+        //         $this->db->where('id', $id);
+        //         $this->db->insert('language', $data);
+        //     }
+            // fclose($handle);
+        // }
+        // exit;
+        // redirect($_SERVER['HTTP_REFERER']);
+        $this->session->set_flashdata('message', 'Label added successfully!');
+        redirect($_SERVER['HTTP_REFERER']);
     }
 
     public function datatable(){
