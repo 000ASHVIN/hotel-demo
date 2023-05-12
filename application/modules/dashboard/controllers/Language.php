@@ -159,9 +159,17 @@ class Language extends MX_Controller {
 
     public function csvform()
     {
-        // $csv = $this->input->post('file',true);
-        dd($this->input->post('file'));
-        //    $csv = $this->input->post('file');
+        $csv = $_FILES['csv_file']['tmp_name'];
+        $handle = fopen($csv,"r");
+        while (($row = fgetcsv($handle, 10000, ",")) != FALSE) //get row vales
+        {
+            print_r($row); //rows in array
+            echo "<br>";
+        //here you can manipulate the values by accessing the array
+
+
+        }
+        exit;
     }
 
     public function datatable(){
