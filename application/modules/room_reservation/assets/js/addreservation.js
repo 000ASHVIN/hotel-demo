@@ -735,6 +735,100 @@ function newBooking() {
         }
     });
 }
+
+
+    var complementaryprice = $("#complementary").find(":selected").val();
+    if (complementaryprice == null) {
+        complementaryprice = $("#complementary-1").find(":selected").val();
+    }
+    for (var s = 0; s < all - 1; s++) {
+        complementaryprice += ",".concat($("#complementary" + s).find(":selected").val());
+    }
+    var offer_price = $("#offer_price").text();
+    if (offer_price == null) {
+        offer_price = $("#offer_price-1").text();
+    }
+    if (offer_price == '') {
+        offer_price = 0;
+    }
+    for (var s = 0; s < all - 1; s++) {
+        offer_price += ",".concat(($("#offer_price" + s).text() ? $("#offer_price" + s).text() : 0));
+    }
+    //end
+    var name = $("#alluser").val();
+    var userid = $("#alluserid").val();
+    if (name == "") {
+        $("#msg1").text("Name field is required");
+        return false;
+    }
+    var tc = $("table.customerdetail tbody tr").length;
+    if (tc == null) {
+        var tc = $("table.customerdetail-1 tbody tr").length;
+    }
+    var allname = name.split(",");
+    if (tc > allname.length) {
+        var newname = $("#username0").text();
+        var newuserid = $("#userid0").text();
+        for (var s = 1; s < tc; s++) {
+            newname += ",".concat($("#username" + s).text());
+            newuserid += ",".concat($("#userid" + s).text());
+        }
+        if (name.length < newname.length) {
+            name = $.trim(newname.replace(/\s+/g, " "));
+            userid = $.trim(newuserid.replace(/\s+/g, " "));
+        }
+    }
+    //reservation details
+    var booking_type = $("#booking_type").find(":selected").val();
+    var booking_source = $("#booking_source").find(":selected").val();
+    var bsorurce_no = $("#bsorurce_no").val();
+    var arrival_from = $("#arrival_from").val();
+    var pof_visit = $("#pof_visit").val();
+    var booking_remarks = $("#booking_remarks").val();
+    //user details
+    var email = $("#allemail").val();
+    var mobile = $("#allmobile").val();
+    var lastname = $("#alllastname").val();
+    var gender = $("#allgender").val();
+    var father = $("#allfather").val();
+    var occupation = $("#alloccupation").val();
+    var dob = $("#alldob").val();
+    var anniversary = $("#allanniversary").val();
+    var pitype = $("#allpitype").val();
+    var pid = $("#allpid").val();
+    var imgfront = $("#allimgfront").val();
+    var imgback = $("#allimgback").val();
+    var imgguest = $("#allimgguest").val();
+    var contacttype = $("#allcontacttype").val();
+    var state = $("#allstate").val();
+    var city = $("#allcity").val();
+    var zipcode = $("#allzipcode").val();
+    var address = $("#alladdress").val();
+    var country = $("#allcountry").val();
+    //payment details
+    var discountreason = $("#discountreason").val();
+    var discountamount = $("#discountamount").val();
+    var commissionrate = $("#commissionrate").val();
+    var commissionamount = $("#commissionamount").val();
+    var paymentmode = $("#paymentmode").find(":selected").val();
+    if (paymentmode == "Bank Payment") {
+        if ($("#cardno").val() == "") {
+            $("#cardno").addClass("is-invalid");
+            return false;
+        } else if ($("#bankname").find(":selected").val() == "") {
+            $("#cardno").removeClass("is-invalid");
+            $("#bankname").parent().addClass("is-invalid");
+            return false;
+        } else {
+            $("#cardno").removeClass("is-invalid");
+            $("#bankname").parent().removeClass("is-invalid");
+        }
+    }
+    var bankname = $("#bankname").find(":selected").val();
+    var cardno = $("#cardno").val();
+    var advanceamount = $("#advanceamount").val();
+    var advanceremarks = $("#advanceremarks").val();
+
 'use strict';
 $("#view_checin,#previous").on("click", function() {
     $("#booking_list").show();

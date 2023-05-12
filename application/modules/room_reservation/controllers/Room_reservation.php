@@ -1180,6 +1180,7 @@ class Room_reservation extends MX_Controller {
 
 	}
 	public function newBooking(){
+		dd('gsdgdg');
 		//reservation details
 		$bookingid = $this->input->post('bookingid', TRUE);
 		$datefilter1 = $this->input->post('datefilter1', TRUE);
@@ -3075,7 +3076,18 @@ class Room_reservation extends MX_Controller {
 	public function room_calender($id = null){
 		
 		$this->permission->method('room_reservation','read')->redirect();
-				
+		//update as available if time ended
+		$this->db->set('tbl_roomnofloorassign.status',1);
+		$this->db->where('booked_info.checkoutdate<',date("Y-m-d H:i:s"));
+		$this->db->where('tbl_roomnofloorassign.status<>',1);
+		$this->db->update('tbl_roomnofloorassign JOIN booked_info ON FIND_IN_SET(tbl_roomnofloorassign.roomno,booked_info.room_no)<>0');
+		//update as booked if time is not ended
+		$this->db->set('tbl_roomnofloorassign.status',2);
+		$this->db->where('booked_info.checkindate<',date("Y-m-d H:i:s"));
+		$this->db->where('booked_info.checkoutdate>',date("Y-m-d H:i:s"));
+		$this->db->where('tbl_roomnofloorassign.status<>',2);
+		$this->db->where_in('booked_info.bookingstatus',array(0,4));
+		$this->db->update('tbl_roomnofloorassign JOIN booked_info ON FIND_IN_SET(tbl_roomnofloorassign.roomno,booked_info.room_no)<>0');		
         $data['title']    = display('calender');
 		$hall_room = $this->db->where('directory', 'hall_room')->where('status', 1)->get('module')->num_rows();
         if ($hall_room == 1) {
@@ -3083,25 +3095,16 @@ class Room_reservation extends MX_Controller {
 		}else{
 			$data["roomlist"] = $this->roomreservation_model->get_all('*','tbl_roomnofloorassign','floorid');
 		}
+		// $bookings = $this->roomreservation_model->bookings();
+		// dd($bookings);
 		$roomdata = $data["roomlist"];
-		
-        $data['module'] = "room_reservation";
+
+		$data['module'] = "room_reservation";
         $data['page']   = "calender";   
-        echo Modules::run('template/layout', $data,$roomdata);
+        echo Modules::run('template/layout', $data);
+		// return $roomdata;
 	}
 
-	public function room_cal(){
-		$hall_room = $this->db->where('directory', 'hall_room')->where('status', 1)->get('module')->num_rows();
-
-		if ($hall_room == 1) {
-			$data["roomlist"] = $this->db->select('*')->from('tbl_roomnofloorassign')->where('roomid<>',NULL)->get()->result();
-		}else{
-			$data["roomlist"] = $this->roomreservation_model->get_all('*','tbl_roomnofloorassign','floorid');
-		}
-			$roomdata = $data["roomlist"];
-	
-       return $roomdata;
-	}
 	public function roomlistDetail(){
 		$bookedid = $this->input->post("bookedid", true);
 		$dateTime = $this->input->post("datetime", true);

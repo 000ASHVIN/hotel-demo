@@ -238,7 +238,6 @@ $route['room_reservation/checkin-list'] = "room_reservation/room_reservation/che
 $route['room_reservation/checkout-list'] = "room_reservation/room_reservation/checkout";
 $route['room_reservation/room-status'] = "room_reservation/room_reservation/room_status";
 $route['room_reservation/room-calender'] = "room_reservation/room_reservation/room_calender";
-$route['room_reservation/room_cal'] = "room_reservation/room_reservation/room_cal";
 // Food Management
 $route['ordermanage/category-create'] = "ordermanage/item_category/create";
 $route['ordermanage/category-list'] = "ordermanage/item_category/index";

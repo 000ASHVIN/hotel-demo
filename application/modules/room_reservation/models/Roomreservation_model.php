@@ -171,6 +171,15 @@ public function findBypayId($id = null)
         $this->db->order_by($orderby,'DESC');
         return $this->db->get()->result();
     }
+	public function bookings($id = null)
+	{
+		$this->db->select('*');
+        $this->db->from('booked_info');
+		$query = $this->db->get();
+		echo $this->db->last_query();exit;
+		return $query->row();
+
+	}
    public function read2($select_items, $table, $orderby, $where_array, $or_where=NULL)
     {
         

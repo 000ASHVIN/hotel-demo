@@ -20,8 +20,7 @@ $whatsapp_count = $WhatsApp->num_rows();
     <!-- Bootstrap CSS -->
     <link href="<?php echo base_url();?>website_assets/css/animate.min.css" rel="stylesheet">
     <link href="<?php echo base_url();?>website_assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="<?php echo base_url();?>website_assets/plugins/themify/themify-icons.css" rel="stylesheet">
-    <link href="<?php echo base_url();?>website_assets/plugins/fontawesome/css/all.min.css" rel="stylesheet">
+z    <link href="<?php echo base_url();?>website_assets/plugins/fontawesome/css/all.min.css" rel="stylesheet">
     <link href="<?php echo base_url();?>website_assets/plugins/owl-carousel/dist/assets/owl.carousel.min.css"
         rel="stylesheet">
     <link href="<?php echo base_url('assets/sweetalert/sweetalert.css') ?>" rel="stylesheet" type="text/css"/>

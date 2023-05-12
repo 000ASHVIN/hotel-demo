@@ -530,8 +530,8 @@
                     "room_calender" => array(
                         //menu name
                             "controller" => "room_reservation",
-                            "method"     => "room_status_calender",
-                            "url"        => "room_reservation/room-status-calender",
+                            "method"     => "room_calender",
+                            "url"        => "room_reservation/room-calender",
                             "permission" => "read"
                         
                     ),
