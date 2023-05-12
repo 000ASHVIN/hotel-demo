@@ -21,20 +21,21 @@
                         </div>
                         <div class="modal-body">
                             <!-- <form action="<?php echo base_url('add-phrase-csv') ?>" method="post" enctype="multipart/form-data" onsubmit="return csvupload()"> -->
-                            <?php echo form_open_multipart('dashboard/language/csvform'); ?>
-                           
+                            
+                            <?php echo form_open_multipart('dashboard/language/csvform/'. $language); ?>
+
                                 <div>
                                     Download <a href="<?php echo base_url('/edit-phrase/csv/sample') . '/' .$language; ?>">Sample</a>
                                 </div>
 
-                                <input type="hidden" id='csrf_token' value="<?php echo $this->security->get_csrf_hash();?>" />
+                                <input type="hidden" name="csrf_test_name" id='csrf_token' value="<?php echo $this->security->get_csrf_hash();?>" />
 
                                 <div class="form-group row">
                                     <label for="file" class="col-sm-2 gallery-inp-hi">File<i
                                             class="text-danger"> * </i></label>
                                     <div class="col-sm-9">
                                         <div>
-                                            <input type="file" name="file" id="file" class="custom-input-file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"/>
+                                            <input type="file" name="csv_file" id="file" class="custom-input-file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"/>
                                             <label for="file">
                                                 <i class="fa fa-upload"></i>
                                                 <span><?php echo display('choose_file'); ?>…</span>
@@ -44,7 +45,7 @@
                                 </div>
 
                                 <div>
-                                    <button type="submit" class="btn btn-primary" onclick=" return csvupload()">Save changes</button>
+                                    <button type="submit" class="btn btn-primary" onclick="return csvupload()">Save changes</button>
                                 </div>
                             <!-- </form> -->
                             <?php echo form_close(); ?>
@@ -142,6 +143,9 @@
     }
 
     function csvupload() {
+        var fd = new FormData();
+        var base_url = $("#base_url").val();
+        var CSRF_TOKEN = $('#csrf_token').val();
         var file = $('#file').val().split('.').pop().toLowerCase();
 
         if($.inArray(file, ['xlsx', 'xls', 'csv']) == -1) {
@@ -149,21 +153,24 @@
             return false;
         }
 
+        fd.append('csv_file', $('#file')[0].files[0]);
+        fd.append('csrf_test_name', CSRF_TOKEN);
+
         // $.ajax({
-        // url: base_url + "add-phrase-csv",
-        // type: "POST",
-        // enctype: 'multipart/form-data',
-        // processData: false,
-        // contentType: false,
-        // success: function (r) {
-        //     $('#file').val('');
-        //     toastr.success("<h5>Success</h5>Save Successfully");         
-        //     // if(r.substr(4,1)==="F")
-        //     // toastrErrorMsg(r);
-        //     //     window.location.reload();
-        // }
-    // });
-    console.log($('#csrf_token').val());
+        //     url: base_url + "dashboard/language/csvform",
+        //     type: "POST",
+        //     data: fd,
+        //     enctype: 'multipart/form-data',
+        //     processData: false,
+        //     contentType: false,
+        //     success: function (r) {
+        //         toastr.success("<h5>Success</h5>Save Successfully");         
+        //         if(r.substr(4,1)==="F")
+        //         toastrErrorMsg(r);
+        //             // window.location.reload();
+        //     }
+        // });
+        console.log($('#csrf_token').val());
     }
 
     
