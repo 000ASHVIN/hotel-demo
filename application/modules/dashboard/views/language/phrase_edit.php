@@ -20,12 +20,10 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <!-- <form action="<?php echo base_url('add-phrase-csv') ?>" method="post" enctype="multipart/form-data" onsubmit="return csvupload()"> -->
-                            
                             <?php echo form_open_multipart('dashboard/language/csvform/'. $language); ?>
 
-                                <div>
-                                    Download <a href="<?php echo base_url('/edit-phrase/csv/sample') . '/' .$language; ?>">Sample</a>
+                                <div class="d-flex justify-content-end mb-2">
+                                    Download&nbsp;<a href="<?php echo base_url('/edit-phrase/csv/sample') . '/' .$language; ?>">Sample</a>
                                 </div>
 
                                 <input type="hidden" name="csrf_test_name" id='csrf_token' value="<?php echo $this->security->get_csrf_hash();?>" />
@@ -47,12 +45,10 @@
                                 <div>
                                     <button type="submit" class="btn btn-primary" onclick="return csvupload()">Save changes</button>
                                 </div>
-                            <!-- </form> -->
                             <?php echo form_close(); ?>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
                         </div>
                         </div>
                     </div>

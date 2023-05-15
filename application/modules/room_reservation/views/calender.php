@@ -4,7 +4,9 @@
     display: none !important;
 }
 </style>
+
 <div id="scheduler"></div>
+
 <script src="<?php echo MOD_URL.$module;?>/assets/js/daypilot-all.min.js"></script>
 <script>
     var roomdata = <?php print_r(json_encode($roomlist)); ?>;
@@ -18,7 +20,7 @@
             { groupBy: "Day", format: "d" }
         ],
         resources: roomdata.map(function(room) {
-            return { name: room.roomno, id: room.id };
+            return { name: "Room No. " + room.roomno, id: room.id };
         }),
         viewType: "Month",
         scale: "Day",
@@ -31,13 +33,13 @@
                 label = "C";
                 break;
             } else {
-                label = "A";
+                label = "";
             }
     }
     args.cell.backColor = (label == "C") ? "#FFDAB9" :  "#33cc33";
     args.cell.html = "<div>" + label + "</div>";
   }
     });
-scheduler.init();
+    scheduler.init();
 
 </script>

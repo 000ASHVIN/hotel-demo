@@ -1180,7 +1180,6 @@ class Room_reservation extends MX_Controller {
 
 	}
 	public function newBooking(){
-		dd('gsdgdg');
 		//reservation details
 		$bookingid = $this->input->post('bookingid', TRUE);
 		$datefilter1 = $this->input->post('datefilter1', TRUE);

@@ -142,7 +142,7 @@ class Language extends MX_Controller {
         $phrases = $this->phrases();
         $data[] = array('f_name'=> "Nishit", 'l_name'=> "patel", 'mobile'=> "999999999", 'gender'=> "male");
         header("Content-type: application/csv");
-        header("Content-Disposition: attachment; filename=\"test".".csv\"");
+        header("Content-Disposition: attachment; filename=\"phrase".".csv\"");
         header("Pragma: no-cache");
         header("Expires: 0");
 
@@ -159,77 +159,36 @@ class Language extends MX_Controller {
 
     public function csvform($language = null)
     {
-        // print_r($language);
-        $tempFile = tempnam(sys_get_temp_dir(), 'csv');
-        $csv = $_FILES['csv_file']['tmp_name'];
+        if (!empty($language)) {
 
-        $handle = fopen($csv, 'r');
-        fgetcsv($handle);
+            if ($this->db->table_exists($this->table)) {
 
-        $tempHandle = fopen($tempFile, 'w');
+                if ($this->db->field_exists($language, $this->table)) {
 
-        while (($row = fgetcsv($handle)) !== false) {
-            fputcsv($tempHandle, $row);
-        }
+                    $csv = $_FILES['csv_file']['tmp_name'];
 
-        print_r($tempHandle);
-        // $handal = fgetcsv($tempHandle);
+                    $handle = fopen($csv, 'r');
+                    $i = 0;
+                    while (($row = fgetcsv($handle, 10000, ",")) != FALSE){
+                        if($i) {
+                            $this->db->where($this->phrase, $row[1])
+                                ->set($language,$row[2])
+                                ->update($this->table); 
+                        }
+                        $i++;
+                    }
 
-        // while (($row = fgetcsv($handal, 10000, ",")) != FALSE){
-        //     print_r($row);
-        // }
+                    fclose($handle);
 
-        // fclose($handle);
-        // fclose($tempHandle);
+                    $this->session->set_flashdata('message', 'Label added successfully!');
+                    redirect($_SERVER['HTTP_REFERER']);
+                }  
 
-// Rename the temporary file to the original file
-        // $handle = fopen($csv,"r");
+            }
+        } 
 
-        // $handle = fgetcsv($handle);
-
-        // // print_r($handle);
-        // // array_shift($handle);
-        
-        // while (($row = fgetcsv($handle, 10000, ",")) != FALSE) //get row vales
-        // {
-        //     print_r($row);
-        //     // $this->db->where($language, $row[2]);
-            
-        //     // $this->db->update('language', $row);
-
-        //     // echo  $this->db->last_query();exit;
-        //                     // ->set($language,$lang[$i])
-        //                     // ->update($this->table);
-        //     // print_r($row[1]); // Phrase Name
-        //     // print_r($row[2]); // label
-
-        //     // $this->db->insert($this->table, $row[1]);
-        //     // $this->db->set($row);
-        //     // $this->db->insert('language');
-        //     // dd($row);
-        //     // print_r($row); //rows in array
-        //     echo "<br>";
-        //     //here you can manipulate the values by accessing the array
-
-
-        // }
-
-        // if ($handle !== false) {
-        //     // read the first row (header) and ignore it
-        //     fgetcsv($handle);
-        //     // read and process each remaining row
-        //     while (($data = fgetcsv($handle)) !== false) {
-            
-        //         // print_r($data);
-        //         $this->db->where('id', $id);
-        //         $this->db->insert('language', $data);
-        //     }
-            // fclose($handle);
-        // }
-        // exit;
-        // redirect($_SERVER['HTTP_REFERER']);
-        $this->session->set_flashdata('message', 'Label added successfully!');
-        redirect($_SERVER['HTTP_REFERER']);
+        $this->session->set_flashdata('exception', 'Please try again');
+        redirect('edit-phrase/'.$language);
     }
 
     public function datatable(){

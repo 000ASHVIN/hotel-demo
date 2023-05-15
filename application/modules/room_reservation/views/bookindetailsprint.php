@@ -166,12 +166,14 @@
                 </li>
                 <?php $totaltax = 0; ?>
                 <?php if(empty($btaxinfo->bookedid)){ ?>
-                    <?php foreach($taxinfo as $tax){ ?>
-                    <li>
-                        <strong><?php echo html_escape($tax->taxname); ?> <?php echo html_escape($tax->rate);?>%:</strong> <?php $singletax=0; $singletax=$tax->rate*$grprice/100;
-                        echo html_escape($singletax); $totaltax+=$singletax; ?>
-                    </li>
-                    <?php } ?>
+                    <?php if(is_object($taxinfo) && count($taxinfo)){ ?>
+                        <?php foreach($taxinfo as $tax){ ?>
+                        <li>
+                            <strong><?php echo html_escape($tax->taxname); ?> <?php echo html_escape($tax->rate);?>%:</strong> <?php $singletax=0; $singletax=$tax->rate*$grprice/100;
+                            echo html_escape($singletax); $totaltax+=$singletax; ?>
+                        </li>
+                    <?php }
+                    } ?>
                 <?php }else{ ?>
                     <?php $taskname = explode(",", $btaxinfo->taskname);
                     $rate = explode(",", $btaxinfo->rate); ?>
