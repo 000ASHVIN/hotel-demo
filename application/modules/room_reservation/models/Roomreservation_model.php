@@ -171,13 +171,30 @@ public function findBypayId($id = null)
         $this->db->order_by($orderby,'DESC');
         return $this->db->get()->result();
     }
-	public function bookings($id = null)
+
+	public function get_rooms($select_items, $table, $orderby,$limit=NULL,$start=NULL)
+    {
+        $this->db->select($select_items);
+        $this->db->from($table);
+        $this->db->limit($limit, $start);
+		$this->db->order_by('roomno','ASC');
+        return $this->db->get()->result();
+    }
+	public function get_status($id = null){
+		$this->db->select('*');
+        $this->db->where('status<>',1);
+        $this->db->from('tbl_roomnofloorassign');
+        return $this->db->get()->result();
+	}
+	public function get_bookings($id = null)
 	{
 		$this->db->select('*');
+		$this->db->where('checkindate<',date("Y-m-d H:i:s"));
+        $this->db->where('checkoutdate>',date("Y-m-d H:i:s"));
+        $this->db->where('bookingstatus=',4);
         $this->db->from('booked_info');
 		$query = $this->db->get();
-		echo $this->db->last_query();exit;
-		return $query->row();
+		return $query->result();
 
 	}
    public function read2($select_items, $table, $orderby, $where_array, $or_where=NULL)

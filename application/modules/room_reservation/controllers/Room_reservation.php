@@ -3045,25 +3045,33 @@ class Room_reservation extends MX_Controller {
 	public function room_status($id = null)
     {
 		$this->permission->method('room_reservation','read')->redirect();				
-		//update as available if time ended
-		$this->db->set('tbl_roomnofloorassign.status',1);
-		$this->db->where('booked_info.checkoutdate<',date("Y-m-d H:i:s"));
-		$this->db->where('tbl_roomnofloorassign.status<>',1);
-		$this->db->update('tbl_roomnofloorassign JOIN booked_info ON FIND_IN_SET(tbl_roomnofloorassign.roomno,booked_info.room_no)<>0');
-		//update as booked if time is not ended
-		$this->db->set('tbl_roomnofloorassign.status',2);
-		$this->db->where('booked_info.checkindate<',date("Y-m-d H:i:s"));
-		$this->db->where('booked_info.checkoutdate>',date("Y-m-d H:i:s"));
-		$this->db->where('tbl_roomnofloorassign.status<>',2);
-		$this->db->where_in('booked_info.bookingstatus',array(0,4));
-		$this->db->update('tbl_roomnofloorassign JOIN booked_info ON FIND_IN_SET(tbl_roomnofloorassign.roomno,booked_info.room_no)<>0');
+		// //update as available if time ended
+		// $this->db->set('tbl_roomnofloorassign.status',1);
+		// $this->db->where('booked_info.checkoutdate<',date("Y-m-d H:i:s"));
+		// $this->db->where('tbl_roomnofloorassign.status<>',1);
+		// $this->db->update('tbl_roomnofloorassign JOIN booked_info ON FIND_IN_SET(tbl_roomnofloorassign.roomno,booked_info.room_no)<>0');
+		// //update as booked if time is not ended
+		// $this->db->set('tbl_roomnofloorassign.status',2);
+		// $this->db->where('booked_info.checkindate<',date("Y-m-d H:i:s"));
+		// $this->db->where('booked_info.checkoutdate>',date("Y-m-d H:i:s"));
+		// $this->db->where('tbl_roomnofloorassign.status<>',2);
+		// $this->db->where_in('booked_info.bookingstatus',array(0,4));
+		// $this->db->update('tbl_roomnofloorassign JOIN booked_info ON FIND_IN_SET(tbl_roomnofloorassign.roomno,booked_info.room_no)<>0');
         $data['title']    = display('room_reservation'); 
 		$hall_room = $this->db->where('directory', 'hall_room')->where('status', 1)->get('module')->num_rows();
         if ($hall_room == 1) {
 			$data["roomlist"] = $this->db->select('*')->from('tbl_roomnofloorassign')->where('roomid<>',NULL)->get()->result();
 		}else{
-			$data["roomlist"] = $this->roomreservation_model->get_all('*','tbl_roomnofloorassign','floorid');
+			$data["roomlist"] = $this->roomreservation_model->get_rooms('*','tbl_roomnofloorassign','floorid');
 		}
+		foreach($data["roomlist"] as $roomlist){
+			if($roomlist->status != 1){
+				$roomlist = $this->roomreservation_model->get_status();
+			}else{
+				$roomlist = $this->roomreservation_model->get_rooms('*','tbl_roomnofloorassign','floorid');
+			}
+		}
+		// dd($roomlist);
 	    $data["floordetails"] = $this->roomreservation_model->floorwithRoom();
 		$data["problemList"] = $this->roomreservation_model->read2('*','tbl_note','note_id',array("status"=>0));
 		$data["solvedList"] = $this->roomreservation_model->read2('*','tbl_note','note_id',array("status"=>1));
@@ -3088,16 +3096,15 @@ class Room_reservation extends MX_Controller {
 		$this->db->where_in('booked_info.bookingstatus',array(0,4));
 		$this->db->update('tbl_roomnofloorassign JOIN booked_info ON FIND_IN_SET(tbl_roomnofloorassign.roomno,booked_info.room_no)<>0');		
         $data['title']    = display('calender');
+		$data['bookings'] = $this->roomreservation_model->get_bookings();
 		$hall_room = $this->db->where('directory', 'hall_room')->where('status', 1)->get('module')->num_rows();
         if ($hall_room == 1) {
 			$data["roomlist"] = $this->db->select('*')->from('tbl_roomnofloorassign')->where('roomid<>',NULL)->get()->result();
 		}else{
-			$data["roomlist"] = $this->roomreservation_model->get_all('*','tbl_roomnofloorassign','floorid');
+			$data["roomlist"] = $this->roomreservation_model->get_rooms('*','tbl_roomnofloorassign','floorid');
 		}
-		// $bookings = $this->roomreservation_model->bookings();
-		// dd($bookings);
-		$roomdata = $data["roomlist"];
 
+		
 		$data['module'] = "room_reservation";
         $data['page']   = "calender";   
         echo Modules::run('template/layout', $data);
