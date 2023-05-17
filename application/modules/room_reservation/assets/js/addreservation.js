@@ -738,6 +738,7 @@ function newBooking() {
 
 
     var complementaryprice = $("#complementary").find(":selected").val();
+    var all = $("table.room-list > tbody").length;
     if (complementaryprice == null) {
         complementaryprice = $("#complementary-1").find(":selected").val();
     }
@@ -759,7 +760,7 @@ function newBooking() {
     var userid = $("#alluserid").val();
     if (name == "") {
         $("#msg1").text("Name field is required");
-        return false;
+        // return false;
     }
     var tc = $("table.customerdetail tbody tr").length;
     if (tc == null) {
@@ -814,11 +815,11 @@ function newBooking() {
     if (paymentmode == "Bank Payment") {
         if ($("#cardno").val() == "") {
             $("#cardno").addClass("is-invalid");
-            return false;
+            // return false;
         } else if ($("#bankname").find(":selected").val() == "") {
             $("#cardno").removeClass("is-invalid");
             $("#bankname").parent().addClass("is-invalid");
-            return false;
+            // return false;
         } else {
             $("#cardno").removeClass("is-invalid");
             $("#bankname").parent().removeClass("is-invalid");
