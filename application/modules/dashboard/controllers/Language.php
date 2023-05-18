@@ -147,10 +147,11 @@ class Language extends MX_Controller {
         header("Expires: 0");
 
         $handle = fopen('php://output', 'w');
-        fputcsv($handle, array("No","Phrase Name","Label"));
+
+        fputcsv($handle, array("No","Phrase Name", "English Label", ucfirst($language) . " Label"));
         $cnt=1;
         foreach ($phrases as $phrase) {
-            $narray=array($cnt, $phrase->phrase, "");
+            $narray=array($cnt, $phrase->phrase, $phrase->english, "");
             fputcsv($handle, $narray);
             $cnt++;
         }
@@ -172,7 +173,7 @@ class Language extends MX_Controller {
                     while (($row = fgetcsv($handle, 10000, ",")) != FALSE){
                         if($i) {
                             $this->db->where($this->phrase, $row[1])
-                                ->set($language,$row[2])
+                                ->set($language,$row[3])
                                 ->update($this->table); 
                         }
                         $i++;
