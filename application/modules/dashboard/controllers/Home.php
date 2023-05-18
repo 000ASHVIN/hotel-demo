@@ -93,6 +93,18 @@ class Home extends MX_Controller {
 		$data["monthlytotal"] =trim($total,',');
 		$data["monthname"]=trim($months,',');
 		$data["shortmonthname"]=trim($shortmonths,',');
+
+		# get user role
+		$reciptionistRole = $this->db->select('*')->where('role_name=','receptionist')->from('sec_role_tbl')->get()->row();
+		$data["is_receptionist"] = false;
+		if($this->session->userdata('id') && $reciptionistRole) {
+			$userRole = $this->db->where('fk_user_id', $this->session->userdata('id'))->where('fk_role_id',$reciptionistRole->role_id)->get('sec_user_access_tbl')->num_rows();
+			if($userRole) {
+				$data["is_receptionist"] = true;
+			}
+		}
+		##
+
 		#page path 
 		$data['module'] = "dashboard";  
 		$data['page']   = "home/home";  
