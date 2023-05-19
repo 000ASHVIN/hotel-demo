@@ -18,40 +18,46 @@
     border: 1px solid white;
     background-color: #3CB043;
   }
-</style>
-<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-  <div style="display: flex; margin: 5px;">
-    <div class="div1"></div>
-    <div style="margin-top: 5px;">Booked</div>
-  </div>
-  <div style="display: flex; margin: 5px;">
-    <div class="div2"></div>
-    <div style="margin-top: 5px;">Available</div>
-  </div>
-</div>
-<div class="d-grid gap-2 d-md-block">
+  body{
+    cursor: auto !important;
+  }
 
-</div>
+
+</style>
 <?php
 $currentMonth = isset($_GET['month']) ? $_GET['month'] : date('m');
 $currentYear = isset($_GET['year']) ? $_GET['year'] : date('Y');
 
-$previousMonth = date('m', strtotime("-1 month", strtotime($currentMonth . '/01/' . $currentYear)));
-$previousYear = date('Y', strtotime("-1 month", strtotime($currentMonth . '/01/' . $currentYear)));
+if($currentMonth < 12) {
+  $nextMonthURL = "?month=" . $currentMonth + 1 . "&year=" . $currentYear;
+} else {
+  $nextMonthURL = "?month=1&year=" . $currentYear + 1;
+}
 
-$nextMonth = date('m', strtotime("+1 month", strtotime($currentMonth . '/01/' . $currentYear)));
-$nextYear = date('Y', strtotime("+1 month", strtotime($currentMonth . '/01/' . $currentYear)));
 
-$nextMonthURL = "?month=" . $nextMonth . "&year=" . $nextYear;
+if($currentMonth > 1) {
+  $prevMonthURL = "?month=" . $currentMonth -1 . "&year=" . $currentYear;
+} else {
+  $prevMonthURL = "?month=12&year=" . $currentYear - 1;
+}
 
-$date = date('Y-m')."-01";
+if(isset($_GET['month']) && isset($_GET['year'])) {
+  if($_GET['month'] < 10) {
+    $month = "0" . (int)$_GET['month'];
+  } else {
+    $month = (int)$_GET['month'];
+  }
+
+  $date = $_GET['year'] . "-" . $month . "-01";
+} else {
+  $date = date('Y-m')."-01";
+}
+
 ?>
-<!-- <a href="?month=<?php echo $previousMonth; ?>&year=<?php echo $previousYear; ?>">Previous Month</a>
-<a href="<?php echo $nextMonthURL; ?>">Next Month</a> -->
-
-<a href="?month=<?php echo date('m', strtotime("-1 month", strtotime($currentMonth . '/01/' . $currentYear))); ?>&year=<?php echo date('Y', strtotime("-1 month", strtotime($currentMonth . '/01/' . $currentYear))); ?>">Previous Month</a>
-<a href="?month=<?php echo date('m', strtotime("+1 month", strtotime($currentMonth . '/01/' . $currentYear))); ?>&year=<?php echo date('Y', strtotime("+1 month", strtotime($currentMonth . '/01/' . $currentYear))); ?>">Next Month</a>
-
+<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+<button class="btn btn-light"><a href="<?php echo base_url('room_reservation/room-calender') . $prevMonthURL; ?>">Previous Month</a></button>
+<button class="btn btn-light"><a href="<?php echo base_url('room_reservation/room-calender') . $nextMonthURL; ?>">Next Month</a></button>
+</div>
 <div id="dp"></div>
 
 
@@ -81,13 +87,16 @@ $date = date('Y-m')."-01";
         format: "d"
       }
     ],
+    navigator: {
+      selectMode: "month" 
+    },
     treeEnabled: true,
     treePreventParentUsage: true,
     cellWidthSpec: 'Auto',
     heightSpec: "Max",
     height: 500,
-    eventMovingStartEndEnabled: true,
-    eventResizingStartEndEnabled: true,
+    // eventMovingStartEndEnabled: true,
+    // eventResizingStartEndEnabled: true,
     timeRangeSelectingStartEndEnabled: true,
     contextMenu: new DayPilot.Menu({
       items: [{
@@ -113,51 +122,7 @@ $date = date('Y-m')."-01";
         }
       ]
     }),
-    onEventMoved: (args) => {
-      dp.message("Moved: " + args.e.text());
-    },
-    onEventMoving: (args) => {
-      if (args.e.resource() === "A" && args.resource === "B") { // don't allow moving from A to B
-        args.left.enabled = false;
-        args.right.html = "You can't move an event from Room 1 to Room 2";
-
-        args.allowed = false;
-      } else if (args.resource === "B") { // must start on a working day, maximum length one day
-        while (args.start.getDayOfWeek() === 0 || args.start.getDayOfWeek() === 6) {
-          args.start = args.start.addDays(1);
-        }
-        args.end = args.start.addDays(1); // fixed duration
-        args.left.enabled = false;
-        args.right.html = "Events in Room 2 must start on a workday and are limited to 1 day.";
-      }
-
-      if (args.resource === "C") {
-        const except = args.e.data;
-        const events = dp.rows.find(args.resource).events.all();
-
-        let start = args.start;
-        let end = args.end;
-        let overlaps = events.some(item => item.data !== except && DayPilot.Util.overlaps(item.start(), item.end(), start, end));
-
-        while (overlaps) {
-          start = start.addDays(1);
-          end = end.addDays(1);
-          overlaps = events.some(item => item.data !== except && DayPilot.Util.overlaps(item.start(), item.end(), start, end));
-        }
-
-        if (args.start !== start) {
-          args.start = start;
-          args.end = end;
-
-          args.left.enabled = false;
-          args.right.html = "Start automatically moved to " + args.start.toString("d MMMM, yyyy");
-        }
-
-      }
-    },
-    onEventResized: (args) => {
-      dp.message("Resized: " + args.e.text());
-    },
+    eventMoveHandling: "Disabled",
     onTimeRangeSelected: async (args) => {
       const modal = await DayPilot.Modal.prompt("New event name:", "New Event")
       dp.clearSelection();
@@ -174,23 +139,6 @@ $date = date('Y-m')."-01";
       });
       dp.message("Created");
     },
-    onEventMove: (args) => {
-      if (args.ctrl) {
-        dp.events.add({
-          start: args.newStart,
-          end: args.newEnd,
-          text: "Copy of " + args.e.text(),
-          resource: args.newResource,
-          id: DayPilot.guid() // generate random id
-        });
-
-        // notify the server about the action here
-        args.preventDefault(); // prevent the default action - moving event to the new location
-      }
-    },
-    onEventClick: (args) => {
-      DayPilot.Modal.alert(args.e.data.text);
-    }
   });
 
   dp.init();
@@ -213,7 +161,22 @@ $date = date('Y-m')."-01";
           children: rooms
         },
       ];
+      // const nextButton = document.getElementById("nextButton");
+      // const prevButton = document.getElementById("prevButton");
 
+      // nextButton.addEventListener("click", () => {
+      //   const currentStartDate = dp.startDate;
+      //   const nextMonthStartDate = currentStartDate.addMonths(1);
+      //   dp.startDate = nextMonthStartDate;
+      //   dp.update();
+      //  });
+
+      // prevButton.addEventListener("click", () => {
+      //   const currentStartDate = dp.startDate;
+      //   const previousMonthStartDate = currentStartDate.addMonths(-1);
+      //   dp.startDate = previousMonthStartDate;
+      //   dp.update();
+      // });
       const events = [];
       for (let i = 0; i < bookings.length; i++) {
 
@@ -233,14 +196,13 @@ $date = date('Y-m')."-01";
             text: "Booked",
             bubbleHtml: "Booked",
             barColor: app.barColor(i),
-            barBackColor: app.barBackColor(i)
+            barBackColor: app.barBackColor(i),
           };
 
           events.push(e);
         }
         
       }
-
       dp.update({
         resources,
         events

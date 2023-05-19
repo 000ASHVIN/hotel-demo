@@ -188,9 +188,18 @@ public function findBypayId($id = null)
 	}
 	public function get_bookings($id = null)
 	{
+		$currentMonth = date('Y-m');
+		$startDate = $currentMonth . '-01';
+		$endDate = date('Y-m-d', strtotime($startDate));
 		$this->db->select('*');
-		$this->db->where('checkindate<',date("Y-m-d H:i:s"));
-        $this->db->where('checkoutdate>',date("Y-m-d H:i:s"));
+		// 2023-06-01
+		// 2023-06-31
+		$this->db->where('checkindate >=', $startDate);
+		// $this->db->where('checkindate <=', $endDate);
+		$this->db->where('checkoutdate >=', $startDate);
+		// $this->db->where('checkoutdate <=', $endDate);
+		// $this->db->where('checkindate<',$endDate);
+        // $this->db->where('checkoutdate>',date("Y-m-d H:i:s"));
         $this->db->where('bookingstatus=',4);
         $this->db->from('booked_info');
 		$query = $this->db->get();
