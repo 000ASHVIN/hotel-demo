@@ -60,3 +60,10 @@
 <div id="printreservation" hidden>
 </div>
 <script src="<?php echo MOD_URL.$module;?>/assets/js/reservationList.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', function() {
+        if (window.location.search.includes("startdate") && window.location.search.includes("enddate")) {
+            $("#reservationbtn").trigger("click");
+        }
+    });
+</script>
