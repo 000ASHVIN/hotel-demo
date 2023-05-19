@@ -159,20 +159,41 @@ $date = date('Y-m')."-01";
       dp.message("Resized: " + args.e.text());
     },
     onTimeRangeSelected: async (args) => {
-      const modal = await DayPilot.Modal.prompt("New event name:", "New Event")
+
+      var startTimestamp = args.start;
+      var startTime = startTimestamp.value
+      var startDate = startTime.split("T")[0];
+      var modifiedStartDate = startDate.replace(/-/g, "/");
+
+      var endTimestamp = args.end;
+      var endTime = endTimestamp.value
+      var endDate = endTime.split("T")[0];
+      var modifiedEndDate = endDate.replace(/-/g, "/");
+
+      var eventDate = modifiedStartDate + " - " + modifiedEndDate;
+
+      const modal = await DayPilot.Modal.prompt("New Reservation:", eventDate)
       dp.clearSelection();
       if (modal.canceled) {
         return;
       }
-      const name = modal.result;
-      dp.events.add({
-        start: args.start,
-        end: args.end,
-        id: DayPilot.guid(),
-        resource: args.resource,
-        text: name
-      });
-      dp.message("Created");
+      if (!modal.canceled) {
+
+        var myurl = baseurl + "room_reservation/booking-list/" + "?";
+
+        if (startDate) {
+          myurl += "startdate=" + startDate;
+        }
+
+        if (endDate) {
+          if (startDate) {
+            myurl += "&";
+          }
+          myurl += "enddate=" + endDate;
+        }
+        window.location.replace(myurl);
+        return;
+      }
     },
     onEventMove: (args) => {
       if (args.ctrl) {
