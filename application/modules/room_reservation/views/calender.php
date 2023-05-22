@@ -25,18 +25,18 @@
 
 </style>
 <?php
-$currentMonth = isset($_GET['month']) ? $_GET['month'] : date('m');
-$currentYear = isset($_GET['year']) ? $_GET['year'] : date('Y');
+$currentMonth = isset($_GET['month']) ? (int)$_GET['month'] : (int)date('m');
+$currentYear = isset($_GET['year']) ? (int)$_GET['year'] : (int)date('Y');
 
 if($currentMonth < 12) {
-  $nextMonthURL = "?month=" . $currentMonth + 1 . "&year=" . $currentYear;
+  $nextMonthURL = "?month=" . ($currentMonth + 1) . "&year=" . $currentYear;
 } else {
   $nextMonthURL = "?month=1&year=" . $currentYear + 1;
 }
 
 
 if($currentMonth > 1) {
-  $prevMonthURL = "?month=" . $currentMonth -1 . "&year=" . $currentYear;
+  $prevMonthURL = "?month=" . ($currentMonth - 1) . "&year=" . $currentYear;
 } else {
   $prevMonthURL = "?month=12&year=" . $currentYear - 1;
 }
@@ -175,13 +175,14 @@ if(isset($_GET['month']) && isset($_GET['year'])) {
       return colors[i % 4];
     },
     loadData() {
-      const resources = [{
-          name: "Locations",
-          id: "G1",
-          expanded: true,
-          children: rooms
-        },
-      ];
+      // const resources = [{
+      //     name: "Rooms",
+      //     id: "G1",
+      //     expanded: true,
+      //     children: rooms
+      //   },
+      // ];
+      const resources = rooms;
       // const nextButton = document.getElementById("nextButton");
       // const prevButton = document.getElementById("prevButton");
 

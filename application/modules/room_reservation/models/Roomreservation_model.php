@@ -188,17 +188,24 @@ public function findBypayId($id = null)
 	}
 	public function get_bookings($id = null)
 	{
-		$currentMonth = date('Y-m');
-		$startDate = $currentMonth . '-01';
-		$endDate = date('Y-m-d', strtotime($startDate));
+		if($this->input->get('month') && $this->input->get('year')) {
+			$startDate = $this->input->get('year') ."-". $this->input->get('month') ."-01";
+			$endDate = $this->input->get('year') ."-". $this->input->get('month') ."-31";
+		} else {
+			$startDate = date('Y-m') ."-01";
+			$startDate = date('Y-m-d', strtotime($startDate));
+
+			$endDate = date('Y-m') ."-31";
+			$endDate = date('Y-m-d', strtotime($endDate));
+		}
+		// dd($startDate);
+		// $currentMonth = date('Y-m');
+		// $startDate = $currentMonth . '-01';
+		// $endDate = date('Y-m-d', strtotime($startDate));
 		$this->db->select('*');
-		// 2023-06-01
-		// 2023-06-31
 		$this->db->where('checkindate >=', $startDate);
-		// $this->db->where('checkindate <=', $endDate);
-		$this->db->where('checkoutdate >=', $startDate);
-		// $this->db->where('checkoutdate <=', $endDate);
-		// $this->db->where('checkindate<',$endDate);
+		$this->db->where('checkoutdate <=', $endDate);
+		// $this->db->where('checkindate<',date("Y-m-d H:i:s"));
         // $this->db->where('checkoutdate>',date("Y-m-d H:i:s"));
         $this->db->where('bookingstatus=',4);
         $this->db->from('booked_info');
