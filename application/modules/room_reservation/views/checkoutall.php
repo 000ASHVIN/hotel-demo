@@ -856,11 +856,11 @@
                             <thead>
                                 <tr>
                                     <th class="1nvp-18"><?php echo display("nod") ?></th>
-                                    <th class="1nvp-18"><?php echo display("rent") ?></th>
+                                    <th class="1nvp-18"><?php echo 'Rate'; ?></th>
                                     <th class="1nvp-18"><?php echo display("rent")." ".display("discount"); ?></th>
                                     <th class="1nvp-18"><?php echo display("dis_day") ?></th>
                                     <th class="1nvp-18"><?php echo display("aft_dis") ?></th>
-                                    <th class="1nvp-18"><?php echo display("tot_rent") ?></th>
+                                    <th class="1nvp-18"><?php echo 'Tot.Rate'; ?></th>
                                     <?php foreach($taxsetting as $tax){ ?>
                                     <th class="1nvp-18"><?php echo html_escape($tax->taxname); ?></th>
                                     <?php } ?>
@@ -912,7 +912,7 @@
         </table>
         <!-- /Order Details -->
         <!-- Table Total -->
-        <div class="invp-22">
+        <div class="invp-22" id="pmode" style="display:none">
             <table border="1px" class="paymentdetails invp-23">
                 <tbody>
                     <tr id="paymentmethod_0">
@@ -922,8 +922,8 @@
                 </tbody>
             </table>
         </div>
-        <div class="invp-22">
-            <table border="0" cellpadding="0" cellspacing="0" align="center" class="invp-24">
+        <div class="invp-22" style="float: right !important">
+            <table border="0" cellpadding="0" cellspacing="0"  align="center" class="invp-24" >
                 <tbody>
                     <tr>
                         <td class="invp-25">
@@ -1083,21 +1083,21 @@
                 </tbody>
             </table>
         </div>
-        <div class="invp-29">&nbsp;</div>
+        <!-- <div class="invp-29">&nbsp;</div> -->
         <!-- /Table Total -->
         <!--Terms and conditions-->
-        <?php $tandc = $this->db->select('*')->from('tbl_widget')->where('widgetid',21)->get()->row(); ?>
-        <div class="invp-30">
-            <div class="invp-31">
-                <?php echo html_escape($tandc->widget_title); ?></div>
-            <ul class="invp-32">
-                <?php $list = explode(".", trim($tandc->widget_desc,"."));
-                        for($z=0; $z<count($list); $z++){
-                    ?>
-                <li class="invp-33"><?php echo html_escape($list[$z]); ?></li>
-                <?php } ?>
-            </ul>
-        </div>
+            <?php $tandc = $this->db->select('*')->from('tbl_widget')->where('widgetid',21)->get()->row(); ?>
+            <div class="invp-30" style="margin-top:200px;">
+                <div class="invp-31">
+                    <?php echo html_escape($tandc->widget_title); ?></div>
+                <ul class="invp-32">
+                    <?php $list = explode(".", trim($tandc->widget_desc,"."));
+                            for($z=0; $z<count($list); $z++){
+                        ?>
+                    <li class="invp-33"><?php echo html_escape($list[$z]); ?></li>
+                    <?php } ?>
+                </ul>
+            </div>
         <!--/Terms and conditions-->
         <!--Signatory-->
         <div class="invp-34">

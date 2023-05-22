@@ -189,6 +189,7 @@ $("#creditamount").on("keyup change", function() {
             $("#paymentmethod_-1").prop("hidden", false);
             $('#pmode_-1').text("On Credited");
             $('#pamount_-1').text(creditamount);
+            $('#pmode').show();
         } else {
             $("#paymentmethod_-1").prop("hidden", true);
         }
@@ -672,6 +673,7 @@ function paymode(l) {
                 var method = $("#paymentmode_" + nl).find(":selected").val();
                 $('#pmode_' + s + '').text(method);
                 $('#pamount_' + s + '').text(newcash);
+                $('#pmode').show();
             } else {
                 $("#paymentmethod_" + s + "").closest("tr").remove();
             }

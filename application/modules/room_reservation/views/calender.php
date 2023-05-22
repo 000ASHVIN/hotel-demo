@@ -69,7 +69,7 @@ if(isset($_GET['month']) && isset($_GET['year'])) {
   var scheduler;
   var bookedRoomId = null;
   var date = '<?php echo $date; ?>';
-
+  
   const rooms = roomdata.map(function(room, index) {
     return { name: "Room No. " + room.roomno, id: String.fromCharCode(65 + index) };
   });
@@ -97,7 +97,7 @@ if(isset($_GET['month']) && isset($_GET['year'])) {
     height: 500,
     // eventMovingStartEndEnabled: true,
     // eventResizingStartEndEnabled: true,
-    timeRangeSelectingStartEndEnabled: true,
+    timeRangeSelectingStartEndEnabled: false,
     contextMenu: new DayPilot.Menu({
       items: [{
           text: "Edit",
@@ -133,8 +133,10 @@ if(isset($_GET['month']) && isset($_GET['year'])) {
       var endTimestamp = args.end;
       var endTime = endTimestamp.value
       var endDate = endTime.split("T")[0];
-      var modifiedEndDate = endDate.replace(/-/g, "/");
-
+      var currentDate = new Date(endDate); 
+      currentDate.setDate(currentDate.getDate() - 1); 
+      var previousDate = currentDate.toISOString().split("T")[0]; 
+      var modifiedEndDate = previousDate.replace(/-/g, "/");
       var eventDate = modifiedStartDate + " - " + modifiedEndDate;
 
       const modal = await DayPilot.Modal.prompt("New Reservation:", eventDate)
