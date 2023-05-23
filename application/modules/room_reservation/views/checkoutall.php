@@ -1077,9 +1077,19 @@
                         </td>
                         <td class="invp-28">
                             <strong
-                                id="inpayableamt"><?php if($currency->position==1){ echo html_escape($currency->curr_icon); } ?><?php  echo $payableamount+$poolbillamt+$restbill+$hallbill+$parkingbill; ?><?php if($currency->position==2){ echo html_escape($currency->curr_icon); } ?></strong>
+                                id="inpayableamt" width="80"><?php if($currency->position==1){ echo html_escape($currency->curr_icon); } ?><?php  echo $payableamount+$poolbillamt+$restbill+$hallbill+$parkingbill; ?><?php if($currency->position==2){ echo html_escape($currency->curr_icon); } ?></strong>
                         </td>
                     </tr>
+                    <?php if(isset($fccurrency) && isset($fccurrency->position)) { ?>
+                    <tr>
+                        <td class="invp-28">
+                            <strong><?php echo 'Grand Total in FC (Incl.Tax)' ?></strong>
+                        </td>
+                        <td class="invp-28" width="80">
+                            <strong><?php if($fccurrency->position==1){ echo html_escape($fccurrency->curr_icon); } ?><?php  echo number_format(($payableamount+$poolbillamt+$restbill+$hallbill+$parkingbill) * $fccurrency->curr_rate); ?><?php if($fccurrency->position==2){ echo html_escape($fccurrency->curr_icon); } ?></strong>
+                        </td>
+                    </tr>
+                    <?php } ?>
                 </tbody>
             </table>
         </div>
