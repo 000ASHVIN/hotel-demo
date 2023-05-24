@@ -240,22 +240,22 @@
                 }
                 ?>
                 <li>
-                    <strong><?php echo display('grand_total') ?>:</strong>  $ <?php if($currency->position==1){echo html_escape($currency->curr_icon);}?><?php echo number_format($totaltax+$postedbill+$grprice,2);?><?php if($currency->position==2){echo html_escape($currency->curr_icon);}?>
+                    <strong><?php echo display('grand_total') ?>:</strong>  $ <?php if($currency->position==1){echo html_escape($currency->curr_icon);}?><?php echo number_format($totaltax+$postedbill+$grprice);?><?php if($currency->position==2){echo html_escape($currency->curr_icon);}?>
                     
                     <?php if(isset($fccurrency) && isset($fccurrency->position)) { ?>
-                    <br /><strong><?php echo 'Grand Total in FC'; ?>:</strong> <?php if($fccurrency->position==1){echo html_escape($fccurrency->curr_icon);}?><?php echo number_format(($totaltax+$postedbill+$grprice) * $fccurrency->curr_rate,2);?><?php if($fccurrency->position==2){echo html_escape($fccurrency->curr_icon);}?>
+                    <br /><strong><?php echo display('grand_total_fc') ?>:</strong> <?php if($fccurrency->position==1){echo html_escape($fccurrency->curr_icon);}?><?php echo number_format(($totaltax+$postedbill+$grprice) * $fccurrency->curr_rate);?><?php if($fccurrency->position==2){echo html_escape($fccurrency->curr_icon);}?>
                     <?php } ?>
-                    
+
                     <br /><strong><?php echo display('paid_amount') ?>:</strong>   $ <?php if($currency->position==1){echo html_escape($currency->curr_icon);}?><?php if (!empty($bookinfo->paid_amount)){echo $bookinfo->paid_amount+$postedbill-$reducetax;} else echo "0";?><?php if($currency->position==2){echo html_escape($currency->curr_icon);}?>
 
                     <?php if(isset($fccurrency) && isset($fccurrency->position)) { ?>
-                    <br /><strong><?php echo 'Paid Amount in FC'; ?>:</strong> <?php if($fccurrency->position==1){echo html_escape($fccurrency->curr_icon);}?><?php if (!empty($bookinfo->paid_amount)){echo number_format(($bookinfo->paid_amount+$postedbill-$reducetax) * $fccurrency->curr_rate,2);} else echo "0";?><?php if($fccurrency->position==2){echo html_escape($fccurrency->curr_icon);}?>
+                    <br /><strong><?php echo display('paid_amount_fc') ?>:</strong> <?php if($fccurrency->position==1){echo html_escape($fccurrency->curr_icon);}?><?php if (!empty($bookinfo->paid_amount)){echo number_format(($bookinfo->paid_amount+$postedbill-$reducetax) * $fccurrency->curr_rate);} else echo "0";?><?php if($fccurrency->position==2){echo html_escape($fccurrency->curr_icon);}?>
                     <?php } ?>
 
                     <br /><strong><?php echo display('due_amount') ?>:</strong> $ <?php if($currency->position==1){echo html_escape($currency->curr_icon);}?><?php if (!empty($bookinfo->paid_amount)){echo ($grprice+$totaltax+$postedbill+$reducetax)-($bookinfo->paid_amount+$postedbill);} else echo html_escape($grprice+$totaltax+$postedbill);?><?php if($currency->position==2){echo html_escape($currency->curr_icon);}?>
 
                     <?php if(isset($fccurrency) && isset($fccurrency->position)) { ?>
-                    <br /><strong><?php echo 'Due Amount in FC'; ?>:</strong> <?php if($fccurrency->position==1){echo html_escape($fccurrency->curr_icon);}?><?php if (!empty($bookinfo->paid_amount)){echo number_format((($grprice+$totaltax+$postedbill+$reducetax)-($bookinfo->paid_amount+$postedbill)) * $fccurrency->curr_rate,2);} else echo number_format(($grprice+$totaltax+$postedbill) * $fccurrency->curr_rate,2);?><?php if($fccurrency->position==2){echo html_escape($fccurrency->curr_icon);}?>
+                    <br /><strong><?php echo  display('due_amount_fc') ?>:</strong> <?php if($fccurrency->position==1){echo html_escape($fccurrency->curr_icon);}?><?php if (!empty($bookinfo->paid_amount)){echo number_format((($grprice+$totaltax+$postedbill+$reducetax)-($bookinfo->paid_amount+$postedbill)) * $fccurrency->curr_rate);} else echo number_format(($grprice+$totaltax+$postedbill) * $fccurrency->curr_rate);?><?php if($fccurrency->position==2){echo html_escape($fccurrency->curr_icon);}?>
                     <?php } ?>
 
                 </li>

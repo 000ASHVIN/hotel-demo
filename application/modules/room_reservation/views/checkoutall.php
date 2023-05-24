@@ -856,11 +856,11 @@
                             <thead>
                                 <tr>
                                     <th class="1nvp-18"><?php echo display("nod") ?></th>
-                                    <th class="1nvp-18"><?php echo 'Rate'; ?></th>
+                                    <th class="1nvp-18"><?php echo display("defaultrate") ?></th>
                                     <th class="1nvp-18"><?php echo display("rent")." ".display("discount"); ?></th>
                                     <th class="1nvp-18"><?php echo display("dis_day") ?></th>
                                     <th class="1nvp-18"><?php echo display("aft_dis") ?></th>
-                                    <th class="1nvp-18"><?php echo 'Tot.Rate'; ?></th>
+                                    <th class="1nvp-18"><?php echo display("total_rate") ?></th>
                                     <?php foreach($taxsetting as $tax){ ?>
                                     <th class="1nvp-18"><?php echo html_escape($tax->taxname); ?></th>
                                     <?php } ?>
@@ -1083,7 +1083,7 @@
                     <?php if(isset($fccurrency) && isset($fccurrency->position)) { ?>
                     <tr>
                         <td class="invp-28">
-                            <strong><?php echo 'Grand Total in FC (Incl.Tax)' ?></strong>
+                            <strong><?php echo display("grand_total_fc_inctax") ?></strong>
                         </td>
                         <td class="invp-28" width="80">
                             <strong><?php if($fccurrency->position==1){ echo html_escape($fccurrency->curr_icon); } ?><?php  echo number_format(($payableamount+$poolbillamt+$restbill+$hallbill+$parkingbill) * $fccurrency->curr_rate); ?><?php if($fccurrency->position==2){ echo html_escape($fccurrency->curr_icon); } ?></strong>
