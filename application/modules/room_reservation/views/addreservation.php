@@ -999,9 +999,9 @@
     if (window.location.search.includes("startdate") && window.location.search.includes("enddate")) {
         var urlParams = new URLSearchParams(window.location.search);
 
-        var startdate = urlParams.get('startdate');
+        var startdate = moment(urlParams.get('startdate')).add(14, 'hours');
 
-        var enddate = urlParams.get('enddate');
+        var enddate = moment(urlParams.get('enddate')).add(10, 'hours');
 
     } else {
         var startdate = moment().startOf('day').add(14, 'hours');
