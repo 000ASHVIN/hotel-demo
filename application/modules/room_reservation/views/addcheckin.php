@@ -994,6 +994,8 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <script>
+    var startdate = moment().startOf('day').add(14, 'hours');
+    var enddate = moment().add(1, 'day').startOf('day').add(10, 'hours');
 $(function() {
         $("#datefilter1").daterangepicker({
             "singleDatePicker": true,
@@ -1004,7 +1006,7 @@ $(function() {
                 cancelLabel: 'Clear',
                 format: 'YYYY-MM-DD HH:mm:ss A'
             },
-            startDate : moment().startOf('day').add(14, 'hours')
+            startDate : startdate
         });  
         $("#datefilter2").daterangepicker({
             "singleDatePicker": true,
@@ -1015,7 +1017,7 @@ $(function() {
                 cancelLabel: 'Clear',
                 format: 'YYYY-MM-DD HH:mm:ss A'
             },
-            startDate : moment().startOf('day').add(10, 'hours')
+            startDate : enddate
         });      
 });
 </script>

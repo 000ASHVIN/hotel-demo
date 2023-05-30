@@ -1005,7 +1005,7 @@
 
     } else {
         var startdate = moment().startOf('day').add(14, 'hours');
-        var enddate = moment().startOf('day').add(10, 'hours');
+        var enddate = moment().add(1, 'day').startOf('day').add(10, 'hours');
     }
 
     $(function() {
@@ -1016,7 +1016,7 @@
             timePickerIncrement: 30,
             locale: {
                 cancelLabel: 'Clear',
-                format: 'YYYY-MM-DD HH:mm:ss A'
+                format: 'YYYY-MM-DD HH:mm:ss'
             },
             startDate :  startdate
         });  
@@ -1028,7 +1028,7 @@
             timePickerIncrement: 30,
             locale: {
                 cancelLabel: 'Clear',
-                format: 'YYYY-MM-DD HH:mm:ss A'
+                format: 'YYYY-MM-DD HH:mm:ss'
             },
             
             startDate :  enddate

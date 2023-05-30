@@ -218,7 +218,7 @@ function checkinBooking() {
         return false;
     }
     var currtime = $("#currtime").val();
-    if (currtime < datefilter1) {
+    if (currtime > datefilter1) {
         swal({
             title: "Warning",
             text: "Checkin time is greater than current time",
