@@ -1004,7 +1004,7 @@ $(function() {
             timePickerIncrement: 30,
             locale: {
                 cancelLabel: 'Clear',
-                format: 'YYYY-MM-DD HH:mm:ss A'
+                format: 'YYYY-MM-DD HH:mm:ss'
             },
             startDate : startdate
         });  
@@ -1015,7 +1015,7 @@ $(function() {
             timePickerIncrement: 30,
             locale: {
                 cancelLabel: 'Clear',
-                format: 'YYYY-MM-DD HH:mm:ss A'
+                format: 'YYYY-MM-DD HH:mm:ss'
             },
             startDate : enddate
         });      
