@@ -2,13 +2,14 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 define('DOMPDF_ENABLE_AUTOLOAD', false);
-require_once("./vendor/dompdf/dompdf/dompdf_config.inc.php");
+// require_once("./vendor/dompdf/dompdf/dompdf_config.inc.php");
+require_once dirname(__FILE__).'/dompdf/autoload.inc.php';
 
 class Pdfgenerator {
 
   public function generate($html, $filename='', $stream=TRUE, $paper = 'A4', $orientation = "portrait")
   {
-    $dompdf = new DOMPDF();
+    $dompdf = new Dompdf\DOMPDF();
     $dompdf->load_html($html);
     $dompdf->set_paper($paper, $orientation);
     $dompdf->render();
@@ -23,7 +24,7 @@ class Pdfgenerator {
 
     $filename = (!empty($filename)?$filename:date("Y-m-d")."-".$booking_id.'.pdf');
 
-    $dompdf = new DOMPDF();
+    $dompdf = new Dompdf\DOMPDF();
     $dompdf->load_html($html);
     $dompdf->set_paper($paper, $orientation);
     $dompdf->render();
