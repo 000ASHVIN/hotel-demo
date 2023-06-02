@@ -88,9 +88,7 @@ class Web_setting extends MX_Controller {
 		// if logo is uploaded then resize the logo
 		if ($invoice_logo !== false && $invoice_logo != null) {
 			$this->fileupload->do_resize(
-				$invoice_logo, 
-				168,
-				65
+				$invoice_logo,
 			);
 		}
 		//if logo is not uploaded
