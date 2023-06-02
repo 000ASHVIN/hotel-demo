@@ -1103,7 +1103,7 @@
             </div>
             <div class="modal-body p-4">
                 <div class="form-floating with-icon mb-3">
-                    <input type="number" class="form-control" id="existmobile"
+                    <input type="tel" class="form-control" id="existmobile"
                         placeholder="<?php echo display("mobile_no") ?>" value="">
                     <label><?php echo display("mobile_no") ?></label>
                     <i class="fas fa-mobile"></i>
