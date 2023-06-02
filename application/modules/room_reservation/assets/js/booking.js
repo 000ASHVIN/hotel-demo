@@ -276,8 +276,8 @@ $(document).ready(function() {
                 return false;
             }else{
                 $("#mobileNo").removeClass("is-invalid");
-                $("#exampleModal").modal("hide");
-                $("#exampleModal2").modal("hide");
+                $("#exampleModal .close").trigger("click");
+                $("#exampleModal2 .close").trigger("click");
                 $("#addcustomer").attr("disabled", true);
                 $("#addoldcustomer").attr("disabled", true);
             }
