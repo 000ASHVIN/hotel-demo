@@ -772,7 +772,7 @@
 
 <div id="printArea" hidden>
     <!--Print button-->
-    <div class="invoice-wrap print-content invp-1">
+    <div class="invoice-wrap print-content">
         <div class="invp-2"><span id="ipaid" class="color-red"><?php echo display("unpaid") ?></span></div>
         <div class="invp-3">
             <img src="<?php echo base_url($invoicelogo->invoice_logo) ?>" alt="..." class="invp-img">
