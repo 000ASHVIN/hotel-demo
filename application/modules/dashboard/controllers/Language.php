@@ -12,7 +12,7 @@ class Language extends MX_Controller {
         $this->load->database();
         $this->load->dbforge(); 
         $this->load->helper('language');
-        
+        $this->load->model('setting_model');
         if (!$this->session->userdata('isAdmin')) 
             redirect('login');
         
@@ -24,6 +24,55 @@ class Language extends MX_Controller {
         $data['module']    = "dashboard";
         $data['languages'] = $this->languages();
         $this->load->view("language/main", $data);
+    }
+
+    public function getlang()
+    {
+        $data['title'] = "Language";
+        $data['module'] = "dashboard";
+        $data['languageList'] = $this->languageList();
+        $data['setting'] = $this->setting_model->read(); 
+
+        $languageList = $data['languageList'];
+        echo json_encode($languageList);
+        return;
+    } 
+
+    public function savelanguage(){
+        $language = $this->input->post('language');
+        
+        $data = array(
+            'language' => $language
+        );
+    
+        $this->db->where('id', 2);
+        $this->db->update('setting', $data);
+      
+        $response = array(
+            'success' => true,
+            'message' => 'Language saved successfully'
+        );
+       
+        echo json_encode($response);;
+        
+    }
+    public function languageList()
+    { 
+        if ($this->db->table_exists("language")) { 
+
+                $fields = $this->db->field_data("language");
+
+                $i = 1;
+                foreach ($fields as $field)
+                {  
+                    if ($i++ > 2)
+                    $result[$field->name] = ucfirst($field->name);
+                }
+
+                if (!empty($result)) return $result;
+        } else {
+            return false; 
+        }
     }
 
     public function phrase()

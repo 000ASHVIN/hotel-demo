@@ -1,4 +1,5 @@
 <link rel="stylesheet" href="<?php echo base_url();?>assets/css/notify.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 <?php 
  $new_version  = file_get_contents('https://update.bdtask.com/xainhotel/autoupdate/update_info');
  $myversion = current_version();
@@ -74,6 +75,15 @@ function current_version(){
             </div>
             <?php } } ?>
             <li class="nav-item dropdown quick-actions">
+                <a class="nav-link dropdown-toggle material-ripple" href="#" id="language-select" value="<?php echo $setting->language; ?>" data-toggle="dropdown">
+                    <i class="bi bi-translate"></i>
+                </a>
+                <div class="dropdown-menu language" style="min-width: 130px;">
+                    <div class="nav-grid-row">
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item dropdown quick-actions">
                 <a class="nav-link dropdown-toggle material-ripple" href="" data-toggle="dropdown">
                     <i class="typcn typcn-th-large-outline"></i>
                 </a>
@@ -142,3 +152,65 @@ function current_version(){
         </div><!-- nav-clock -->
     </div>
 </nav>
+<script>
+$(document).ready(function() {
+  function fetchLanguageOptions() {
+    var dropdownMenu = $('.language');
+    var base_url = $("#base_url").val();
+
+    $.ajax({
+      url: base_url + "dashboard/language/getlang",
+      method: 'GET',
+      dataType: 'json',
+      success: function(response) {
+        var navGridRow = dropdownMenu.find('.nav-grid-row');
+        navGridRow.empty();
+
+        var selectedIndex = "<?php echo $setting->language; ?>"; 
+
+        $.each(response, function(index, language) {
+          var link = $('<a class="languageurl"></a>').attr('href', '#').text(language).data('index', index);
+          if (index === selectedIndex) {
+            link.addClass('selected');
+          }
+          link.on('click', function() {
+            var selectedIndex = $(this).data('index');
+            $('.languageurl').removeClass('selected');
+            $(this).addClass('selected');
+
+            var base_url = $("#base_url").val();
+            var csrfTokenName = "<?php echo $this->security->get_csrf_token_name(); ?>";
+            var csrfTokenValue = "<?php echo $this->security->get_csrf_hash(); ?>";
+
+            $.ajax({
+              url: base_url + "dashboard/language/saveLanguage",
+              method: 'POST',
+              data: {
+                language: selectedIndex,
+                [csrfTokenName]: csrfTokenValue
+              },
+              dataType: 'json',
+              success: function(response) {
+                location.reload();
+              },
+              error: function(xhr, status, error) {
+                console.error(error);
+              }
+            });
+          });
+
+          var col = $('<div></div>').addClass('col').append(link);
+          navGridRow.append(col);
+        });
+
+        dropdownMenu.find('.nav-grid-row a.selected').css('color', 'red');
+      },
+      error: function(xhr, status, error) {
+        console.error(error);
+      }
+    });
+  }
+
+  fetchLanguageOptions();
+});
+</script>

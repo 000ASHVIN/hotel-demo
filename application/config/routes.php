@@ -359,6 +359,8 @@ $route['delete-role/(:num)'] = "dashboard/role/delete_access_role/$1";
 
 //Language
 $route['language'] = "dashboard/language";
+$route['language/getlang'] = "dashboard/language/getlang";
+$route['language/savelanguage'] = "dashboard/language/savelanguage";
 $route['add-phrase'] = 'dashboard/Language/add_phrase';
 $route['phrase-list'] = "dashboard/language/phrase";
 $route['edit-phrase/(:any)'] = "dashboard/language/editPhrase/$1";
