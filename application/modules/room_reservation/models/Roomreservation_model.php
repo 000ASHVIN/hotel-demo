@@ -207,6 +207,7 @@ public function findBypayId($id = null)
 		$this->db->where('checkoutdate <=', $endDate);
 		// $this->db->where('checkindate<',date("Y-m-d H:i:s"));
         // $this->db->where('checkoutdate>',date("Y-m-d H:i:s"));
+		$this->db->where('coments', 'Booking from admin');  
 		$bookingStatusArray = array(0, 2, 3, 4, 5);
 		$this->db->where_in('bookingstatus', $bookingStatusArray);  
 		$this->db->from('booked_info');
