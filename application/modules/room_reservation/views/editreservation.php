@@ -1181,7 +1181,7 @@ $(function() {
                 cancelLabel: 'Clear',
                 format: 'YYYY-MM-DD HH:mm:ss'
             },
-            startDate : startdate
+            // startDate : startdate
         });  
         $("#datefilter2").daterangepicker({
             "singleDatePicker": true,
@@ -1192,7 +1192,7 @@ $(function() {
                 cancelLabel: 'Clear',
                 format: 'YYYY-MM-DD HH:mm:ss'
             },
-            startDate : enddate
+            // startDate : enddate
         });      
 });
 </script>

@@ -213,14 +213,14 @@ if(isset($_GET['month']) && isset($_GET['year'])) {
 
         if(roomId) {
         const today = new DayPilot.Date(); 
-
+        bookingStatus= bookings[i].bookingstatus;
         const e = {
           start: new DayPilot.Date(bookings[i].checkindate),
           end: new DayPilot.Date(bookings[i].checkoutdate),
           id: DayPilot.guid(),
           resource: roomId,
-          text: today > new DayPilot.Date(bookings[i].checkoutdate) ? "Finish" : "Booked", 
-          bubbleHtml: today > new DayPilot.Date(bookings[i].checkoutdate) ? "Finish" : "Booked", 
+          text: today < new DayPilot.Date(bookings[i].checkoutdate) && bookingStatus == 5 ? "Finish"  : today > new DayPilot.Date(bookings[i].checkoutdate) ? "Finish" : "Booked",
+          bubbleHtml:  today < new DayPilot.Date(bookings[i].checkoutdate) && bookingStatus == 5 ? "Finish" : today > new DayPilot.Date(bookings[i].checkoutdate) ? "Finish" : "Booked",
           barColor: app.barColor(i),
           barBackColor: app.barBackColor(i),
         };

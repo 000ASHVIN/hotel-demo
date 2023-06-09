@@ -1593,8 +1593,9 @@ class Room_reservation extends MX_Controller {
 					$this->db->where("otherguest_id",$gid[$gl]->otherguest_id)->delete('tbl_otherguest');
 				}
 			}
-			//end
-			   echo '<h5>Success</h5>Updated Successfully';
+			//end		
+			echo '<h5>Success</h5>Updated Successfully';
+			echo '<script>location.reload();</script>';
 			} else {
 				echo '<h5>Failed</h5>Please Try Again';
 			}
