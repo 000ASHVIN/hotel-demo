@@ -218,16 +218,21 @@ function checkinBooking() {
         return false;
     }
     var currtime = $("#currtime").val();
+    
     if (currtime > datefilter1) {
-        swal({
-            title: "Warning",
-            text: "Checkin time is greater than current time",
-            type: "warning",
-            confirmButtonColor: "#28a745",
-            confirmButtonText: "Ok",
-            closeOnConfirm: true
-        });
-        return false;
+        var checkindate = moment(currtime).format('YYYY-MM-DD')
+        if(moment(checkindate).add(7, 'hours').format('YYYY-MM-DD HH:mm') < datefilter2) {}
+        else {
+            swal({
+                title: "Warning",
+                text: "Checkin time is greater than current time",
+                type: "warning",
+                confirmButtonColor: "#28a745",
+                confirmButtonText: "Ok",
+                closeOnConfirm: true
+            });
+            return false;
+        }
     }
     //roomdetails
     var all = $("table.room-list > tbody").length;

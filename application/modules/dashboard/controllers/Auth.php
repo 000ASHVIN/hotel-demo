@@ -21,14 +21,12 @@ class Auth extends MX_Controller {
 		$data['title']    = display('login'); 
 		$this->form_validation->set_rules('email', display('first_name'), 'required|max_length[100]|trim|xss_clean');
 		$this->form_validation->set_rules('password', display('password'), 'required|max_length[32]|md5|trim|xss_clean');
-		$this->form_validation->set_rules('captcha', display('captcha'),  array('matches[captcha]', function($captcha){ 
-			$oldCaptcha = $this->session->userdata('captcha');
-			if ($captcha == $oldCaptcha) {
-				return true;
-			}
-		}
-	)
-);
+		// $this->form_validation->set_rules('captcha', display('captcha'),  array('matches[captcha]', function($captcha){ 
+		// 	$oldCaptcha = $this->session->userdata('captcha');
+		// 	if ($captcha == $oldCaptcha) {
+		// 		return true;
+		// 	}
+		// }));
 		
 		$data['user'] = (object)$userData = array(
 			'email' 	 => $this->input->post('email',TRUE),

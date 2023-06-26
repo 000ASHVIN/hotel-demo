@@ -90,10 +90,10 @@
                                 <!-- capta part -->
                             </div>
                             <div class="form-group">
-                                <label class="input-label font-weight-bold" for="captcha"><?php echo $captcha_image ?></label>
+                                <!-- <label class="input-label font-weight-bold" for="captcha"><?php echo $captcha_image ?></label>
 
                                 <input type="captcha" placeholder="<?php echo display('captcha') ?>" name="captcha"
-                                    id="captcha" class="form-control fs-16px" autocomplete="off">
+                                    id="captcha" class="form-control fs-16px" autocomplete="off"> -->
                             </div>
                             <a href="forgot-password"><p class="text-right"><?php echo display('forgot_password') ?></p></a>
                             <button type="submit"
